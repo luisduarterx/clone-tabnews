@@ -1,3 +1,4 @@
+import Error from "next/error";
 import { Client } from "pg";
 
 async function query(queryObject) {
@@ -10,10 +11,15 @@ async function query(queryObject) {
     database: process.env.POSTGRES_DB,
   });
   await client.connect(); // se conecta ao client e espera a conecao ser feita usando await
-  const result = await client.query(queryObject); // executa uma query dentro do client
-  // result = aguarda a informacao utilizando await e guarda em result
-  await client.end(); // aguarda o client finalizar
-  return result;
+  try {
+    const result = await client.query(queryObject); // executa uma query dentro do client
+    return result;
+    // result = aguarda a informacao utilizando await e guarda em result
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await client.end(); // aguarda o client finalizar
+  }
 }
 
 export default {
