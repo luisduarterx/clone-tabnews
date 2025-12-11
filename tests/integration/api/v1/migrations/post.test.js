@@ -1,4 +1,9 @@
 import database from "infra/database.js";
+import orcherstrator from "tests/orcherstrator";
+
+beforeAll(async () => {
+  await orcherstrator.waitForAllServices();
+});
 
 async function cleanDatabase() {
   await database.query("drop schema public cascade;create schema public");
