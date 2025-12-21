@@ -16,7 +16,8 @@ jobs:
       - run: npm ci
 
       - run: npm run lint:prettier:check
-  Eslint:
+
+  eslint:
     name: eslint
     runs-on: ubuntu-latest
     steps:
